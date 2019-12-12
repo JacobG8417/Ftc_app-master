@@ -24,8 +24,6 @@ public class Teleop_Mecanum extends OpMode {
     @Override
     public void init() {
 
-//hello? Anybody here? Help. Please.
-
 
         //this gives motors names using universal constants(another class, look at the Java Class
         //called UniversalConstants for the code.
