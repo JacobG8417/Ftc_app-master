@@ -26,7 +26,7 @@ public class Teleop_Mecanum extends OpMode {
 
 
         //this gives motors names using universal constants(another class, look at the Java Class
-        //called UniversalConstants for the code.
+        //called UniversalConstants for the code).
         front_left = hardwareMap .dcMotor.get(UniversalConstants.LEFT1NAME);
         back_left = hardwareMap.dcMotor.get(UniversalConstants.LEFT2NAME);
         front_right = hardwareMap.dcMotor.get(UniversalConstants.RIGHT1NAME);
@@ -120,8 +120,8 @@ public class Teleop_Mecanum extends OpMode {
         }
         double scaledPower = SCALEDPOWER;
         //This puts power to the wheels in the correct way to make it turn.
-        front_left.setPower(leftFrontVal*scaledPower+frontLeft.getPower()*(1+scaledPower));
-        back_left.setPower(leftBackVal*scaledPower+backLeft.getPower()*(1+scaledPower));
+        front_left.setPower(leftFrontVal*scaledPower+frontLeft.getPower()*(+scaledPower));
+        back_left.setPower(leftBackVal*scaledPower+backLeft.getPower()*(+scaledPower));
         front_right.setPower(rightFrontVal*scaledPower+frontRight.getPower()*(1-scaledPower));
         back_right.setPower(rightBackVal*scaledPower+backRight.getPower()*(1-scaledPower));
     }
@@ -129,7 +129,7 @@ public class Teleop_Mecanum extends OpMode {
 }
 
 /*
-Thanks to Ethan Schaffer for creating the program, to Eric fro 8417 for allowing us access to it. To
+Thanks to Ethan Schaffer for creating the program, to Eric from 8417 for allowing us access to it. To
 Charles from 8417 for giving us the code to turn the robot, and to Jacob from 14358 for correcting some errors
 and putting the comments, adding the program for turning, and organizing the code.
 
