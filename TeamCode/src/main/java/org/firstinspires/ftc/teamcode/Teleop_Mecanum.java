@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import java.util.Arrays;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Mecanum_Drive", group="TeleOp")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Mecanum_TeleOp", group="TeleOp")
 public class Teleop_Mecanum extends OpMode {
     //This gives thresholds for the motors.
     private static final double TRIGGERTHRESHOLD = .2;
