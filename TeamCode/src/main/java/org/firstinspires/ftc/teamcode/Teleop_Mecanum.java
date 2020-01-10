@@ -46,8 +46,12 @@ public class Teleop_Mecanum extends OpMode {
 
      @Override
     public void loop() {
+        
+        servo servo;
+        servo servo1;
+        
         servo rightFoundation = null;
-        servo leftFoundation = null;
+        servo1 leftFoundation = null;
 
         if (gamepad1.a);
         rightFoundation.setPosition(0);
@@ -139,6 +143,11 @@ public class Teleop_Mecanum extends OpMode {
     }
 
     private class servo {
+        public void setPosition(int i) {
+        }
+    }
+
+    private class servo1 {
         public void setPosition(int i) {
         }
     }
