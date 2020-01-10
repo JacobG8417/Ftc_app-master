@@ -7,6 +7,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.Arrays;
 
@@ -33,17 +34,28 @@ public class Teleop_Mecanum extends OpMode {
         back_right = hardwareMap.dcMotor.get(UniversalConstants.RIGHT2NAME);
 
         //this allows the robot drive
-        front_right.setDirection(DcMotorSimple.Direction.REVERSE);
-        front_left.setDirection(DcMotorSimple.Direction.FORWARD);
+        front_right.setDirection(DcMotorSimple.Direction.FORWARD);
+        front_left.setDirection(DcMotorSimple.Direction.REVERSE);
         back_right.setDirection(DcMotorSimple.Direction.REVERSE);
         back_left.setDirection(DcMotorSimple.Direction.FORWARD);
+
+
 
         }
 
 
-
      @Override
     public void loop() {
+        servo rightFoundation = null;
+        servo leftFoundation = null;
+
+        if (gamepad1.a);
+        rightFoundation.setPosition(0);
+        leftFoundation.setPosition(0);
+        if(gamepad1.x);
+        rightFoundation.setPosition(1);
+        leftFoundation.setPosition(1);
+
         //This part assigns buttons/joysticks for driving
          double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
         double inputX = Math.abs(gamepad1.left_stick_x) > ACCEPTINPUTTHRESHOLD ? -gamepad1.left_stick_x : 0;
@@ -126,6 +138,10 @@ public class Teleop_Mecanum extends OpMode {
         back_right.setPower(rightBackVal*scaledPower+backRight.getPower()*(1-scaledPower));
     }
 
+    private class servo {
+        public void setPosition(int i) {
+        }
+    }
 }
 
 /*
