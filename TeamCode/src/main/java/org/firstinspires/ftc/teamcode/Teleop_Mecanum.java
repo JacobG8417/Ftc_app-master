@@ -53,10 +53,10 @@ public class Teleop_Mecanum extends OpMode {
          
         if (gamepad1.a){
         rightFoundation.setPosition(1);
-        leftFoundation.setPosition(0); }
-        if(gamepad1.x){
-        rightFoundation.setPosition(0);
         leftFoundation.setPosition(1); }
+        if(gamepad1.x){
+        rightFoundation.setPosition(0.5);
+        leftFoundation.setPosition(0.5); }
 
         //This part assigns buttons/joysticks for driving
          double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
