@@ -47,17 +47,16 @@ public class Teleop_Mecanum extends OpMode {
      @Override
     public void loop() {
 
-
-         Servo rightFoundation=hardwareMap.servo.get("rightFoundation");
-         Servo leftFoundation=hardwareMap.servo.get("leftFoundation");
+        Servo rightFoundation=hardwareMap.servo.get("rightFoundation");
+        Servo leftFoundation=hardwareMap.servo.get("leftFoundation");
          
          
-        if (gamepad1.a);
-        rightFoundation.setPosition(0);
-        leftFoundation.setPosition(1);
-        if(gamepad1.x);
+        if (gamepad1.a){
         rightFoundation.setPosition(1);
-        leftFoundation.setPosition(0);
+        leftFoundation.setPosition(0); }
+        if(gamepad1.x){
+        rightFoundation.setPosition(0);
+        leftFoundation.setPosition(1); }
 
         //This part assigns buttons/joysticks for driving
          double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
