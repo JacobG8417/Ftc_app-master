@@ -39,6 +39,18 @@ public class Teleop_Mecanum extends OpMode {
         back_right.setDirection(DcMotorSimple.Direction.REVERSE);
         back_left.setDirection(DcMotorSimple.Direction.FORWARD);
 
+        DcMotor slide_left = hardwareMap.get(DcMotor.class,"slide_left");
+        DcMotor slide_right = hardwareMap.get(DcMotor.class, "slide_right");
+
+        slide_right.setDirection(DcMotorSimple.Direction.REVERSE);
+        slide_left.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        double leftslide = gamepad2.left_stick_y;
+        double rightslide = gamepad2.left_stick_y;
+        
+        slide_left.setPower(leftslide);
+        slide_right.setPower(rightslide);
+
 
 
 
