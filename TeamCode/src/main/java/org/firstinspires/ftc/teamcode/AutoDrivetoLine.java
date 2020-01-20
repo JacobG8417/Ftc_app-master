@@ -32,16 +32,16 @@ public class AutoDrivetoLine extends LinearOpMode {
         DcMotor back_right = hardwareMap.get(DcMotor.class, "back_right");
 
 
-        front_left.setDirection(DcMotor.Direction.REVERSE);
+        front_left.setDirection(DcMotor.Direction.FORWARD);
         back_left.setDirection(DcMotor.Direction.REVERSE);
-        front_right.setDirection(DcMotor.Direction.FORWARD);
+        front_right.setDirection(DcMotor.Direction.REVERSE);
         back_right.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart();
         runtime.reset();
 
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.55)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.35)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
