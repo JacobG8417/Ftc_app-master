@@ -49,14 +49,36 @@ public class Teleop_Mecanum extends OpMode {
 
         Servo rightFoundation=hardwareMap.servo.get("rightFoundation");
         Servo leftFoundation=hardwareMap.servo.get("leftFoundation");
+        Servo intakeArm=hardwareMap.servo.get("intakeArm");
+        Servo intakeGrabber=hardwareMap.servo.get("intakeGrabber");
          
          
-        if (gamepad1.a){
+        if (gamepad1.a)
+        {
         rightFoundation.setPosition(1);
-        leftFoundation.setPosition(1); }
-        if(gamepad1.x){
+        leftFoundation.setPosition(1);
+        }
+        if(gamepad1.x)
+        {
         rightFoundation.setPosition(0.5);
-        leftFoundation.setPosition(0.5); }
+        leftFoundation.setPosition(0.5);
+        }
+        if (gamepad2.a)
+        {
+            intakeArm.setPosition(0);
+        }
+        if(gamepad2.x)
+        {
+            intakeGrabber.setPosition(0);
+        }
+        if(gamepad2.y)
+        {
+            intakeArm.setPosition(1);
+        }
+        if(gamepad2.b)
+        {
+            intakeGrabber.setPosition(0.5);
+        }
 
         //This part assigns buttons/joysticks for driving
          double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
