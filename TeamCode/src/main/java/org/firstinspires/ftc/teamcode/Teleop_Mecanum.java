@@ -47,7 +47,7 @@ public class Teleop_Mecanum extends OpMode {
 
         double leftslide = gamepad2.left_stick_y;
         double rightslide = gamepad2.left_stick_y;
-        
+
         slide_left.setPower(leftslide);
         slide_right.setPower(rightslide);
 
@@ -73,8 +73,8 @@ public class Teleop_Mecanum extends OpMode {
         }
         if(gamepad1.x)
         {
-        rightFoundation.setPosition(0.5);
-        leftFoundation.setPosition(0.5);
+        rightFoundation.setPosition(0);
+        leftFoundation.setPosition(0);
         }
         if (gamepad2.a)
         {
