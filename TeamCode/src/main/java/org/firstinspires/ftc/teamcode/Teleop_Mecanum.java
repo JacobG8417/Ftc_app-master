@@ -36,8 +36,8 @@ public class Teleop_Mecanum extends OpMode {
         //this allows the robot drive
         front_right.setDirection(DcMotorSimple.Direction.FORWARD);
         front_left.setDirection(DcMotorSimple.Direction.REVERSE);
-        back_right.setDirection(DcMotorSimple.Direction.REVERSE);
-        back_left.setDirection(DcMotorSimple.Direction.FORWARD);
+        back_right.setDirection(DcMotorSimple.Direction.FORWARD);
+        back_left.setDirection(DcMotorSimple.Direction.REVERSE);
 
         DcMotor slide_left = hardwareMap.get(DcMotor.class,"slide_left");
         DcMotor slide_right = hardwareMap.get(DcMotor.class, "slide_right");
@@ -52,9 +52,7 @@ public class Teleop_Mecanum extends OpMode {
         slide_right.setPower(rightslide);
 
 
-
-
-        }
+    }
 
 
      @Override
@@ -69,12 +67,12 @@ public class Teleop_Mecanum extends OpMode {
         if (gamepad1.a)
         {
         rightFoundation.setPosition(1);
-        leftFoundation.setPosition(1);
+        leftFoundation.setPosition(0.5);
         }
         if(gamepad1.x)
         {
         rightFoundation.setPosition(0);
-        leftFoundation.setPosition(0);
+        leftFoundation.setPosition(1);
         }
         if (gamepad2.a)
         {
@@ -94,7 +92,7 @@ public class Teleop_Mecanum extends OpMode {
         }
 
         //This part assigns buttons/joysticks for driving
-         double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
+          double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
         double inputX = Math.abs(gamepad1.left_stick_x) > ACCEPTINPUTTHRESHOLD ? -gamepad1.left_stick_x : 0;
         double inputC = Math.abs(gamepad1.right_stick_y)> ACCEPTINPUTTHRESHOLD ? -gamepad1.right_stick_y: 0;
 
