@@ -12,8 +12,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import java.util.Arrays;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Mecanum_TeleOp", group="TeleOp")
-public class Teleop_Mecanum extends OpMode {
-    //This gives thresholds for the motors.
+public class Teleop_Mecanum<opModeIsActive> extends OpMode {
+    //This gives deadzones for the motors.
     private static final double TRIGGERTHRESHOLD = .2;
     private static final double ACCEPTINPUTTHRESHOLD = .15;
 
@@ -22,6 +22,7 @@ public class Teleop_Mecanum extends OpMode {
 
 
     private static DcMotor front_left, back_left, front_right, back_right;
+
     @Override
     public void init() {
 
@@ -39,8 +40,9 @@ public class Teleop_Mecanum extends OpMode {
         back_right.setDirection(DcMotorSimple.Direction.FORWARD);
         back_left.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        DcMotor slide_left = hardwareMap.get(DcMotor.class,"slide_left");
-        DcMotor slide_right = hardwareMap.get(DcMotor.class, "slide_right");
+
+        com.qualcomm.robotcore.hardware.DcMotor slide_left = hardwareMap.get(DcMotor.class, "slide_left");
+        com.qualcomm.robotcore.hardware.DcMotor slide_right = hardwareMap.get(DcMotor.class, "slide_right");
 
         slide_right.setDirection(DcMotorSimple.Direction.REVERSE);
         slide_left.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -51,14 +53,15 @@ public class Teleop_Mecanum extends OpMode {
         slide_left.setPower(leftslide);
         slide_right.setPower(rightslide);
 
-
     }
 
 
      @Override
     public void loop() {
 
-        Servo rightFoundation=hardwareMap.servo.get("rightFoundation");
+
+
+         Servo rightFoundation=hardwareMap.servo.get("rightFoundation");
         Servo leftFoundation=hardwareMap.servo.get("leftFoundation");
         Servo intakeArm=hardwareMap.servo.get("intakeArm");
         Servo intakeGrabber=hardwareMap.servo.get("intakeGrabber");
@@ -97,6 +100,7 @@ public class Teleop_Mecanum extends OpMode {
         double inputC = Math.abs(gamepad1.right_stick_y)> ACCEPTINPUTTHRESHOLD ? -gamepad1.right_stick_y: 0;
 
 
+
          double BIGGERTRIGGER = gamepad1.left_trigger > gamepad1.right_trigger ? gamepad1.left_trigger : gamepad1.right_trigger;
 
             if(BIGGERTRIGGER > TRIGGERTHRESHOLD){ //If we have enough pressure on a trigger
@@ -112,6 +116,9 @@ public class Teleop_Mecanum extends OpMode {
                 inputY /= 3*BIGGERTRIGGER; //slow down our power inputs
                 inputX /= 3*BIGGERTRIGGER; //slow down our power inputs
                 inputC /= 3*BIGGERTRIGGER; //slow down our power inputs
+
+
+
 
             }
         }
@@ -173,21 +180,8 @@ public class Teleop_Mecanum extends OpMode {
         back_right.setPower(rightBackVal*scaledPower+backRight.getPower()*(1-scaledPower));
     }
 
-    private class servo {
-        public void setPosition(int i) {
-        }
     }
 
-    private class servo1 {
-        public void setPosition(int i) {
-        }
-    }
-
-    private class string {
-        public void setPosition(int i) {
-        }
-    }
-}
 
 /*
 Thanks to Ethan Schaffer for creating the program, to Eric from 8417 for allowing us access to it. To
