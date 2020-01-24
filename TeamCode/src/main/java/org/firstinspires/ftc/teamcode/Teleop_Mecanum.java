@@ -5,6 +5,7 @@ https://ftcprogramming.wordpress.com/2015/11/30/building-ftc_app-wirelessly/
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServoImpl;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -22,10 +23,8 @@ public class Teleop_Mecanum<opModeIsActive> extends OpMode {
 
 
     private static DcMotor front_left, back_left, front_right, back_right;
-
     @Override
     public void init() {
-
 
         //this gives motors names using universal constants(another class, look at the Java Class
         //called UniversalConstants for the code).
@@ -46,17 +45,19 @@ public class Teleop_Mecanum<opModeIsActive> extends OpMode {
         slide_right.setDirection(DcMotorSimple.Direction.REVERSE);
         slide_left.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        double leftslide = gamepad2.left_stick_y;
-        double rightslide = gamepad2.left_stick_y;
-
-        slide_left.setPower(leftslide);
-        slide_right.setPower(rightslide);
 
     }
 
 
     @Override
     public void loop() {
+
+        double leftslide = gamepad2.left_stick_y;
+        double rightslide = gamepad2.left_stick_y;
+
+        slide_left.setPower(leftslide);
+        slide_right.setPower(rightslide);
+
 
         Servo rightFoundation = hardwareMap.servo.get("rightFoundation");
         Servo leftFoundation = hardwareMap.servo.get("leftFoundation");
@@ -161,5 +162,8 @@ public class Teleop_Mecanum<opModeIsActive> extends OpMode {
         back_left.setPower(leftBackVal * scaledPower + backLeft.getPower() * (+scaledPower));
         front_right.setPower(rightFrontVal * scaledPower + frontRight.getPower() * (1 - scaledPower));
         back_right.setPower(rightBackVal * scaledPower + backRight.getPower() * (1 - scaledPower));
+    }
+
+    private class runOpMode {
     }
 }
