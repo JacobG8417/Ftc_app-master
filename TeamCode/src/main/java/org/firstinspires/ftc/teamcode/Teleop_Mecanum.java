@@ -29,7 +29,7 @@ public class Teleop_Mecanum<opModeIsActive> extends OpMode {
 
         //this gives motors names using universal constants(another class, look at the Java Class
         //called UniversalConstants for the code).
-        front_left = hardwareMap .dcMotor.get(UniversalConstants.LEFT1NAME);
+        front_left = hardwareMap.dcMotor.get(UniversalConstants.LEFT1NAME);
         back_left = hardwareMap.dcMotor.get(UniversalConstants.LEFT2NAME);
         front_right = hardwareMap.dcMotor.get(UniversalConstants.RIGHT1NAME);
         back_right = hardwareMap.dcMotor.get(UniversalConstants.RIGHT2NAME);
@@ -40,9 +40,8 @@ public class Teleop_Mecanum<opModeIsActive> extends OpMode {
         back_right.setDirection(DcMotorSimple.Direction.FORWARD);
         back_left.setDirection(DcMotorSimple.Direction.REVERSE);
 
-
-        com.qualcomm.robotcore.hardware.DcMotor slide_left = hardwareMap.get(DcMotor.class, "slide_left");
-        com.qualcomm.robotcore.hardware.DcMotor slide_right = hardwareMap.get(DcMotor.class, "slide_right");
+        DcMotor slide_left = hardwareMap.get(DcMotor.class, "slide_left");
+        DcMotor slide_right = hardwareMap.get(DcMotor.class, "slide_right");
 
         slide_right.setDirection(DcMotorSimple.Direction.REVERSE);
         slide_left.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -56,69 +55,54 @@ public class Teleop_Mecanum<opModeIsActive> extends OpMode {
     }
 
 
-     @Override
+    @Override
     public void loop() {
 
+        Servo rightFoundation = hardwareMap.servo.get("rightFoundation");
+        Servo leftFoundation = hardwareMap.servo.get("leftFoundation");
+        Servo intakeArm = hardwareMap.servo.get("intakeArm");
+        Servo intakeGrabber = hardwareMap.servo.get("intakeGrabber");
 
-
-         Servo rightFoundation=hardwareMap.servo.get("rightFoundation");
-        Servo leftFoundation=hardwareMap.servo.get("leftFoundation");
-        Servo intakeArm=hardwareMap.servo.get("intakeArm");
-        Servo intakeGrabber=hardwareMap.servo.get("intakeGrabber");
-         
-         
-        if (gamepad1.a)
-        {
-        rightFoundation.setPosition(1);
-        leftFoundation.setPosition(0.5);
+        if (gamepad1.a) {
+            rightFoundation.setPosition(1);
+            leftFoundation.setPosition(0.5);
         }
-        if(gamepad1.x)
-        {
-        rightFoundation.setPosition(0);
-        leftFoundation.setPosition(1);
+        if (gamepad1.x) {
+            rightFoundation.setPosition(0);
+            leftFoundation.setPosition(1);
         }
-        if (gamepad2.a)
-        {
+        if (gamepad2.a) {
             intakeArm.setPosition(0);
         }
-        if(gamepad2.x)
-        {
+        if (gamepad2.x) {
             intakeGrabber.setPosition(0);
         }
-        if(gamepad2.y)
-        {
+        if (gamepad2.y) {
             intakeArm.setPosition(1);
         }
-        if(gamepad2.b)
-        {
+        if (gamepad2.b) {
             intakeGrabber.setPosition(0.5);
         }
 
         //This part assigns buttons/joysticks for driving
-          double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
+        double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
         double inputX = Math.abs(gamepad1.left_stick_x) > ACCEPTINPUTTHRESHOLD ? -gamepad1.left_stick_x : 0;
-        double inputC = Math.abs(gamepad1.right_stick_y)> ACCEPTINPUTTHRESHOLD ? -gamepad1.right_stick_y: 0;
+        double inputC = Math.abs(gamepad1.right_stick_y) > ACCEPTINPUTTHRESHOLD ? -gamepad1.right_stick_y : 0;
+        double BIGGERTRIGGER = gamepad1.left_trigger > gamepad1.right_trigger ? gamepad1.left_trigger : gamepad1.right_trigger;
 
-
-
-         double BIGGERTRIGGER = gamepad1.left_trigger > gamepad1.right_trigger ? gamepad1.left_trigger : gamepad1.right_trigger;
-
-            if(BIGGERTRIGGER > TRIGGERTHRESHOLD){ //If we have enough pressure on a trigger
-            if( (Math.abs(inputY) > Math.abs(inputX)) && (Math.abs(inputY) > Math.abs(inputC)) ){ //If our forwards motion is the largest motion vector
-                inputY /= 5*BIGGERTRIGGER; //slow down our power inputs
-                inputX /= 5*BIGGERTRIGGER; //slow down our power inputs
-                inputC /= 5*BIGGERTRIGGER; //slow down our power inputs
-            } else if( (Math.abs(inputC) > Math.abs(inputX)) && (Math.abs(inputC) > Math.abs(inputY)) ){ //and if our turing motion is the largest motion vector
-                inputY /= 4*BIGGERTRIGGER; //slow down our power inputs
-                inputX /= 4*BIGGERTRIGGER; //slow down our power inputs
-                inputC /= 4*BIGGERTRIGGER; //slow down our power inputs
-            } else if( (Math.abs(inputX) > Math.abs(inputY)) && (Math.abs(inputX) > Math.abs(inputC)) ){ //and if our strafing motion is the largest motion vector
-                inputY /= 3*BIGGERTRIGGER; //slow down our power inputs
-                inputX /= 3*BIGGERTRIGGER; //slow down our power inputs
-                inputC /= 3*BIGGERTRIGGER; //slow down our power inputs
-
-
-
+        if (BIGGERTRIGGER > TRIGGERTHRESHOLD) { //If we have enough pressure on a trigger
+            if ((Math.abs(inputY) > Math.abs(inputX)) && (Math.abs(inputY) > Math.abs(inputC))) { //If our forwards motion is the largest motion vector
+                inputY /= 5 * BIGGERTRIGGER; //slow down our power inputs
+                inputX /= 5 * BIGGERTRIGGER; //slow down our power inputs
+                inputC /= 5 * BIGGERTRIGGER; //slow down our power inputs
+            } else if ((Math.abs(inputC) > Math.abs(inputX)) && (Math.abs(inputC) > Math.abs(inputY))) { //and if our turing motion is the largest motion vector
+                inputY /= 4 * BIGGERTRIGGER; //slow down our power inputs
+                inputX /= 4 * BIGGERTRIGGER; //slow down our power inputs
+                inputC /= 4 * BIGGERTRIGGER; //slow down our power inputs
+            } else if ((Math.abs(inputX) > Math.abs(inputY)) && (Math.abs(inputX) > Math.abs(inputC))) { //and if our strafing motion is the largest motion vector
+                inputY /= 3 * BIGGERTRIGGER; //slow down our power inputs
+                inputX /= 3 * BIGGERTRIGGER; //slow down our power inputs
+                inputC /= 3 * BIGGERTRIGGER; //slow down our power inputs
 
             }
         }
@@ -142,7 +126,6 @@ public class Teleop_Mecanum<opModeIsActive> extends OpMode {
             driveVel = 0;
             strafeVel = 0;
             turnVel = 0;
-
             //this part allows the robot to turn with the mecanums, taking our certain variables so
             //it can turn.
             double leftFrontVel = -driveVel - strafeVel + turnVel;
@@ -174,24 +157,9 @@ public class Teleop_Mecanum<opModeIsActive> extends OpMode {
         }
         double scaledPower = SCALEDPOWER;
         //This puts power to the wheels in the correct way to make it turn.
-        front_left.setPower(leftFrontVal*scaledPower+frontLeft.getPower()*(+scaledPower));
-        back_left.setPower(leftBackVal*scaledPower+backLeft.getPower()*(+scaledPower));
-        front_right.setPower(rightFrontVal*scaledPower+frontRight.getPower()*(1-scaledPower));
-        back_right.setPower(rightBackVal*scaledPower+backRight.getPower()*(1-scaledPower));
+        front_left.setPower(leftFrontVal * scaledPower + frontLeft.getPower() * (+scaledPower));
+        back_left.setPower(leftBackVal * scaledPower + backLeft.getPower() * (+scaledPower));
+        front_right.setPower(rightFrontVal * scaledPower + frontRight.getPower() * (1 - scaledPower));
+        back_right.setPower(rightBackVal * scaledPower + backRight.getPower() * (1 - scaledPower));
     }
-
-    }
-
-
-/*
-Thanks to Ethan Schaffer for creating the program, to Eric from 8417 for allowing us access to it. To
-Charles from 8417 for giving us the code to turn the robot, and to Jacob from 14358 for correcting some errors
-and putting the comments, adding the program for turning, and organizing the code.
-
-driving it is simple, on the controller that FIRST assigns to use.
-press the left stick forwards to drive forwards and backward to drive backward.
-press the left stick to the left to strafe to the left.
-press the left stick to the right to strafe to the right.
-press the right stick forwards to turn to the left.
-press the right stick backwards to turn to the right.
- */
+}
