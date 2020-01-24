@@ -4,6 +4,7 @@ https://ftcprogramming.wordpress.com/2015/11/30/building-ftc_app-wirelessly/
 */
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServoImpl;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -13,7 +14,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import java.util.Arrays;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Mecanum_TeleOp", group="TeleOp")
-public class Teleop_Mecanum<opModeIsActive> extends OpMode {
+public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
     //This gives deadzones for the motors.
     private static final double TRIGGERTHRESHOLD = .2;
     private static final double ACCEPTINPUTTHRESHOLD = .15;
@@ -21,11 +22,10 @@ public class Teleop_Mecanum<opModeIsActive> extends OpMode {
     //Emphasis on current controller reading (vs current motor power) on the drive train
     private static final double SCALEDPOWER = 1;
 
-
     private static DcMotor front_left, back_left, front_right, back_right;
-    @Override
-    public void init() {
 
+    @Override
+    public void runOpMode() {
         //this gives motors names using universal constants(another class, look at the Java Class
         //called UniversalConstants for the code).
         front_left = hardwareMap.dcMotor.get(UniversalConstants.LEFT1NAME);
@@ -45,70 +45,68 @@ public class Teleop_Mecanum<opModeIsActive> extends OpMode {
         slide_right.setDirection(DcMotorSimple.Direction.REVERSE);
         slide_left.setDirection(DcMotorSimple.Direction.FORWARD);
 
+       Servo rightFoundation = hardwareMap.servo.get("rightFoundation");
+       Servo leftFoundation = hardwareMap.servo.get("leftFoundation");
+       Servo intakeArm = hardwareMap.servo.get("intakeArm");
+       Servo intakeGrabber = hardwareMap.servo.get("intakeGrabber");
 
-    }
+       waitForStart();
 
+       while(opModeIsActive()) {
 
-    @Override
-    public void loop() {
+           double leftslide = gamepad2.left_stick_y;
+           double rightslide = gamepad2.left_stick_y;
 
-        double leftslide = gamepad2.left_stick_y;
-        double rightslide = gamepad2.left_stick_y;
+           slide_left.setPower(leftslide);
+           slide_right.setPower(rightslide);
 
-        slide_left.setPower(leftslide);
-        slide_right.setPower(rightslide);
+           if (gamepad1.a) {
+               rightFoundation.setPosition(1);
+               leftFoundation.setPosition(0);
+           }
+           if (gamepad1.x) {
+               rightFoundation.setPosition(1);
+               leftFoundation.setPosition(0);
+           }
+           if (gamepad2.a) {
+               intakeArm.setPosition(0);
+           }
+           if (gamepad2.x) {
+               intakeGrabber.setPosition(0);
+           }
+           if (gamepad2.y) {
+               intakeArm.setPosition(1);
+           }
+           if (gamepad2.b) {
+               intakeGrabber.setPosition(0.5);
+           }
 
+           //This part assigns buttons/joysticks for driving
+           double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
+           double inputX = Math.abs(gamepad1.left_stick_x) > ACCEPTINPUTTHRESHOLD ? -gamepad1.left_stick_x : 0;
+           double inputC = Math.abs(gamepad1.right_stick_y) > ACCEPTINPUTTHRESHOLD ? -gamepad1.right_stick_y : 0;
+           double BIGGERTRIGGER = gamepad1.left_trigger > gamepad1.right_trigger ? gamepad1.left_trigger : gamepad1.right_trigger;
 
-        Servo rightFoundation = hardwareMap.servo.get("rightFoundation");
-        Servo leftFoundation = hardwareMap.servo.get("leftFoundation");
-        Servo intakeArm = hardwareMap.servo.get("intakeArm");
-        Servo intakeGrabber = hardwareMap.servo.get("intakeGrabber");
+           if (BIGGERTRIGGER > TRIGGERTHRESHOLD) { //If we have enough pressure on a trigger
+               if ((Math.abs(inputY) > Math.abs(inputX)) && (Math.abs(inputY) > Math.abs(inputC))) { //If our forwards motion is the largest motion vector
+                   inputY /= 5 * BIGGERTRIGGER; //slow down our power inputs
+                   inputX /= 5 * BIGGERTRIGGER; //slow down our power inputs
+                   inputC /= 5 * BIGGERTRIGGER; //slow down our power inputs
+               } else if ((Math.abs(inputC) > Math.abs(inputX)) && (Math.abs(inputC) > Math.abs(inputY))) { //and if our turing motion is the largest motion vector
+                   inputY /= 4 * BIGGERTRIGGER; //slow down our power inputs
+                   inputX /= 4 * BIGGERTRIGGER; //slow down our power inputs
+                   inputC /= 4 * BIGGERTRIGGER; //slow down our power inputs
+               } else if ((Math.abs(inputX) > Math.abs(inputY)) && (Math.abs(inputX) > Math.abs(inputC))) { //and if our strafing motion is the largest motion vector
+                   inputY /= 3 * BIGGERTRIGGER; //slow down our power inputs
+                   inputX /= 3 * BIGGERTRIGGER; //slow down our power inputs
+                   inputC /= 3 * BIGGERTRIGGER; //slow down our power inputs
 
-        if (gamepad1.a) {
-            rightFoundation.setPosition(1);
-            leftFoundation.setPosition(0.5);
-        }
-        if (gamepad1.x) {
-            rightFoundation.setPosition(0);
-            leftFoundation.setPosition(1);
-        }
-        if (gamepad2.a) {
-            intakeArm.setPosition(0);
-        }
-        if (gamepad2.x) {
-            intakeGrabber.setPosition(0);
-        }
-        if (gamepad2.y) {
-            intakeArm.setPosition(1);
-        }
-        if (gamepad2.b) {
-            intakeGrabber.setPosition(0.5);
-        }
+               }
 
-        //This part assigns buttons/joysticks for driving
-        double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
-        double inputX = Math.abs(gamepad1.left_stick_x) > ACCEPTINPUTTHRESHOLD ? -gamepad1.left_stick_x : 0;
-        double inputC = Math.abs(gamepad1.right_stick_y) > ACCEPTINPUTTHRESHOLD ? -gamepad1.right_stick_y : 0;
-        double BIGGERTRIGGER = gamepad1.left_trigger > gamepad1.right_trigger ? gamepad1.left_trigger : gamepad1.right_trigger;
-
-        if (BIGGERTRIGGER > TRIGGERTHRESHOLD) { //If we have enough pressure on a trigger
-            if ((Math.abs(inputY) > Math.abs(inputX)) && (Math.abs(inputY) > Math.abs(inputC))) { //If our forwards motion is the largest motion vector
-                inputY /= 5 * BIGGERTRIGGER; //slow down our power inputs
-                inputX /= 5 * BIGGERTRIGGER; //slow down our power inputs
-                inputC /= 5 * BIGGERTRIGGER; //slow down our power inputs
-            } else if ((Math.abs(inputC) > Math.abs(inputX)) && (Math.abs(inputC) > Math.abs(inputY))) { //and if our turing motion is the largest motion vector
-                inputY /= 4 * BIGGERTRIGGER; //slow down our power inputs
-                inputX /= 4 * BIGGERTRIGGER; //slow down our power inputs
-                inputC /= 4 * BIGGERTRIGGER; //slow down our power inputs
-            } else if ((Math.abs(inputX) > Math.abs(inputY)) && (Math.abs(inputX) > Math.abs(inputC))) { //and if our strafing motion is the largest motion vector
-                inputY /= 3 * BIGGERTRIGGER; //slow down our power inputs
-                inputX /= 3 * BIGGERTRIGGER; //slow down our power inputs
-                inputC /= 3 * BIGGERTRIGGER; //slow down our power inputs
-
-            }
-        }
-        //Use the larger trigger value to scale down the inputs.
-        arcadeMecanum(inputY, inputX, inputC, front_left, front_right, back_left, back_right);
+           }
+           //Use the larger trigger value to scale down the inputs.
+           arcadeMecanum(inputY, inputX, inputC, front_left, front_right, back_left, back_right);
+       }
     }
 
     // y - forwards
@@ -162,8 +160,5 @@ public class Teleop_Mecanum<opModeIsActive> extends OpMode {
         back_left.setPower(leftBackVal * scaledPower + backLeft.getPower() * (+scaledPower));
         front_right.setPower(rightFrontVal * scaledPower + frontRight.getPower() * (1 - scaledPower));
         back_right.setPower(rightBackVal * scaledPower + backRight.getPower() * (1 - scaledPower));
-    }
-
-    private class runOpMode {
     }
 }
