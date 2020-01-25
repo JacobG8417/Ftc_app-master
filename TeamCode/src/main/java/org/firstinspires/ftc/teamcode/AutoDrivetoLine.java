@@ -47,8 +47,8 @@ public class AutoDrivetoLine extends LinearOpMode {
             telemetry.update();
 
             front_left.setPower(CRATER_SPEED);
-            back_left.setPower(CRATER_SPEED);
-            front_right.setPower(CRATER_SPEED);
+            back_left.setPower(-CRATER_SPEED); 
+            front_right.setPower(-CRATER_SPEED);
             back_right.setPower(CRATER_SPEED);
 
 
