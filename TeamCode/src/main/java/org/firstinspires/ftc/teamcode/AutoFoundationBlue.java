@@ -106,6 +106,18 @@ public class AutoFoundationBlue extends LinearOpMode {
             front_right.setPower(DRIVE_SPEED);
             back_right.setPower(-DRIVE_SPEED);
         }
+
+        {
+            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+
+            front_left.setPower(0);
+            back_left.setPower(0);
+            front_right.setPower(0);
+            back_right.setPower(0);
+
+        }
+        
         //this is for letting go of the foundation
         runtime.reset();
         while(opModeIsActive()
