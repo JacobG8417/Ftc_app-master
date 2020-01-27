@@ -17,6 +17,7 @@ public class AutoFoundationBlue extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     static final double CRATER_SPEED = 0.5;
+    static final double TURN_SPEED = 0.5;
 
     private DcMotor back_left = null;
     private DcMotor front_right = null;
@@ -55,9 +56,11 @@ public class AutoFoundationBlue extends LinearOpMode {
             back_right.setPower(-CRATER_SPEED);
 
         }
+
         //this is for driving up to the foundation
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.00)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.00))
+        {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
@@ -70,7 +73,8 @@ public class AutoFoundationBlue extends LinearOpMode {
 
         //this makes the foundation movers grab the servos
         runtime.reset();
-        while(opModeIsActive()) {
+        while(opModeIsActive())
+        {
             rightFoundation.setPosition(1);
             leftFoundation.setPosition(0);
 
