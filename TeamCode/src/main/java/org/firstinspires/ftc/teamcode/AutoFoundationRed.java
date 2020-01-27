@@ -73,7 +73,6 @@ public class AutoFoundationRed extends LinearOpMode {
 
         //this makes the foundation movers grab the servos
         runtime.reset();
-        while(opModeIsActive())
         {
             rightFoundation.setPosition(1);
             leftFoundation.setPosition(0);
@@ -94,7 +93,7 @@ public class AutoFoundationRed extends LinearOpMode {
         }
         //this is for letting go of the foundation
         runtime.reset();
-        while(opModeIsActive()){
+        {
             rightFoundation.setPosition(0);
             leftFoundation.setPosition(1);
         }
