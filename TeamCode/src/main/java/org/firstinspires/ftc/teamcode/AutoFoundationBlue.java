@@ -84,7 +84,7 @@ public class AutoFoundationBlue extends LinearOpMode {
         }
         //for going to the line and stopping
                 runtime.reset();
-                while (opModeIsActive() && (runtime.seconds() < 1.85)) {
+                while (opModeIsActive() && (runtime.seconds() < 1.90)) {
                     telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
                     telemetry.update();
 
