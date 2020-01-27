@@ -39,7 +39,6 @@ public class AutoDrivetoLine extends LinearOpMode {
         back_right.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
-        runtime.reset();
 
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 0.35)) {

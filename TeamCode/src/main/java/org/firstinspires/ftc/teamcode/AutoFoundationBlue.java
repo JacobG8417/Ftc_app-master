@@ -55,20 +55,27 @@ public class AutoFoundationBlue extends LinearOpMode {
             back_right.setPower(-CRATER_SPEED);
 
         }
-            //this is for driving up to the foundation
-            runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < 1.00)) {
-                telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-                telemetry.update();
+        //this is for driving up to the foundation
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 1.00)) {
+            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
 
-                front_left.setPower(CRATER_SPEED);
-                back_left.setPower(-CRATER_SPEED);
-                front_right.setPower(-CRATER_SPEED);
-                back_right.setPower(CRATER_SPEED);
+            front_left.setPower(CRATER_SPEED);
+            back_left.setPower(-CRATER_SPEED);
+            front_right.setPower(-CRATER_SPEED);
+            back_right.setPower(CRATER_SPEED);
 
-            }
+        }
 
-                //this is where we put the servo moving code
+        //this makes the foundation movers grab the servos
+        runtime.reset();
+        while(opModeIsActive()) {
+            rightFoundation.setPosition(1);
+            leftFoundation.setPosition(0);
+
+        }
+
 
         //this is for driving back from the foundation to the wall
         runtime.reset();
@@ -80,8 +87,15 @@ public class AutoFoundationBlue extends LinearOpMode {
             back_left.setPower(CRATER_SPEED);
             front_right.setPower(CRATER_SPEED);
             back_right.setPower(-CRATER_SPEED);
-
         }
+        //this is for letting go of the foundation
+        runtime.reset();
+        while(opModeIsActive()){
+            rightFoundation.setPosition(0);
+            leftFoundation.setPosition(1);
+        }
+
+
         //for going to the line and stopping
                 runtime.reset();
                 while (opModeIsActive() && (runtime.seconds() < 1.90)) {
