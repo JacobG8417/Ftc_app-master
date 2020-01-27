@@ -70,8 +70,21 @@ public class AutoFoundationBlue extends LinearOpMode {
             back_right.setPower(DRIVE_SPEED);
 
         }
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 0.10))
+        {
+            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
 
-        //this makes the foundation movers grab the servos
+            front_left.setPower(0);
+            back_left.setPower(0);
+            front_right.setPower(0);
+            back_right.setPower(0);
+
+        }
+
+
+        //this makes the foundation movers grab the foundation
         runtime.reset();
 
         {
