@@ -17,7 +17,6 @@ public class AutoFoundationBlue extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     static final double DRIVE_SPEED = 0.5;
-    static final double TURN_SPEED = 0.5;
 
     private DcMotor back_left = null;
     private DcMotor front_right = null;
@@ -59,8 +58,7 @@ public class AutoFoundationBlue extends LinearOpMode {
 
         //this is for driving up to the foundation
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.00))
-        {
+        while (opModeIsActive() && (runtime.seconds() < 1.00)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
@@ -68,30 +66,15 @@ public class AutoFoundationBlue extends LinearOpMode {
             back_left.setPower(-DRIVE_SPEED);
             front_right.setPower(-DRIVE_SPEED);
             back_right.setPower(DRIVE_SPEED);
-
-        }
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.10))
-        {
-            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
-
-            front_left.setPower(0);
-            back_left.setPower(0);
-            front_right.setPower(0);
-            back_right.setPower(0);
-
         }
-
 
         //this makes the foundation movers grab the foundation
         runtime.reset();
-        while(opModeIsActive())
-        {
-            telemetry.update();
+        while (opModeIsActive()) {
+
             rightFoundation.setPosition(1);
             leftFoundation.setPosition(0);
-
         }
 
 
@@ -105,39 +88,30 @@ public class AutoFoundationBlue extends LinearOpMode {
             back_left.setPower(DRIVE_SPEED);
             front_right.setPower(DRIVE_SPEED);
             back_right.setPower(-DRIVE_SPEED);
-        }
 
-        {
-            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
-
-            front_left.setPower(0);
-            back_left.setPower(0);
-            front_right.setPower(0);
-            back_right.setPower(0);
-
-        }
-        
-        //this is for letting go of the foundation
-        runtime.reset();
-        while(opModeIsActive()
-        )
-        {
-            rightFoundation.setPosition(0);
-            leftFoundation.setPosition(1);
         }
 
 
-        //for going to the line and stopping
-                runtime.reset();
-                while (opModeIsActive() && (runtime.seconds() < 1.90)) {
-                    telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-                    telemetry.update();
+            //this is for letting go of the foundation
+            runtime.reset();
+            while (opModeIsActive()) {
+                rightFoundation.setPosition(0);
+                leftFoundation.setPosition(1);
+            }
 
-                    front_left.setPower(DRIVE_SPEED);
-                    back_left.setPower(DRIVE_SPEED);
-                    front_right.setPower(DRIVE_SPEED);
-                    back_right.setPower(DRIVE_SPEED);
-                }
+
+            //for going to the line and stopping
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 1.90)) {
+                telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+                telemetry.update();
+
+                front_left.setPower(DRIVE_SPEED);
+                back_left.setPower(DRIVE_SPEED);
+                front_right.setPower(DRIVE_SPEED);
+                back_right.setPower(DRIVE_SPEED);
             }
         }
+    }
+
