@@ -43,7 +43,6 @@ public class AutoFoundationBlue extends LinearOpMode {
         Servo leftFoundation = hardwareMap.servo.get("leftFoundation");
 
         waitForStart();
-        runtime.reset();
 
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 0.35)) {
