@@ -15,7 +15,7 @@ public class AutoDrivetoLine extends LinearOpMode {
     HardwarePushbot robot = new HardwarePushbot();
     private ElapsedTime runtime = new ElapsedTime();
 
-    static final double CRATER_SPEED = 1;
+    static final double DRIVE_SPEED = 1;
 
     @Override
     public void runOpMode() {
@@ -40,10 +40,10 @@ public class AutoDrivetoLine extends LinearOpMode {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
-            front_left.setPower(CRATER_SPEED);
-            back_left.setPower(-CRATER_SPEED);
-            front_right.setPower(-CRATER_SPEED);
-            back_right.setPower(CRATER_SPEED);
+            front_left.setPower(DRIVE_SPEED);
+            back_left.setPower(-DRIVE_SPEED);
+            front_right.setPower(-DRIVE_SPEED);
+            back_right.setPower(DRIVE_SPEED);
 
 
         }
