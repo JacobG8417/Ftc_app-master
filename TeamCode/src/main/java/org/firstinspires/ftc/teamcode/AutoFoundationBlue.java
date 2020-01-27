@@ -44,6 +44,7 @@ public class AutoFoundationBlue extends LinearOpMode {
 
         waitForStart();
 
+        //This is the block for strafing to line up to the foundation
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 0.35)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
@@ -55,15 +56,15 @@ public class AutoFoundationBlue extends LinearOpMode {
             back_right.setPower(-CRATER_SPEED);
 
         }
-
+            //this is for driving up to the foundation
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < 1)) {
+            while (opModeIsActive() && (runtime.seconds() < 0.60)) {
                 telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
                 telemetry.update();
 
                 front_left.setPower(CRATER_SPEED);
-                back_left.setPower(CRATER_SPEED);
-                front_right.setPower(CRATER_SPEED);
+                back_left.setPower(-CRATER_SPEED);
+                front_right.setPower(-CRATER_SPEED);
                 back_right.setPower(CRATER_SPEED);
 
             }
@@ -71,14 +72,14 @@ public class AutoFoundationBlue extends LinearOpMode {
                 //this is where we put the servo moving code
 
                 runtime.reset();
-                while (opModeIsActive() && (runtime.seconds() < 1)) {
+                while (opModeIsActive() && (runtime.seconds() < 0.35)) {
                     telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
                     telemetry.update();
 
-                    front_left.setPower(-CRATER_SPEED);
-                    back_left.setPower(-CRATER_SPEED);
-                    front_right.setPower(-CRATER_SPEED);
-                    back_right.setPower(-CRATER_SPEED);
+                    front_left.setPower(CRATER_SPEED);
+                    back_left.setPower(CRATER_SPEED);
+                    front_right.setPower(CRATER_SPEED);
+                    back_right.setPower(CRATER_SPEED);
                 }
 
                 runtime.reset();
