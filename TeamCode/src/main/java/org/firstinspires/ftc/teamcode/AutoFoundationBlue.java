@@ -86,8 +86,9 @@ public class AutoFoundationBlue extends LinearOpMode {
 
         //this makes the foundation movers grab the foundation
         runtime.reset();
-
+        while(opModeIsActive())
         {
+            telemetry.update();
             rightFoundation.setPosition(1);
             leftFoundation.setPosition(0);
 
@@ -107,6 +108,8 @@ public class AutoFoundationBlue extends LinearOpMode {
         }
         //this is for letting go of the foundation
         runtime.reset();
+        while(opModeIsActive()
+        )
         {
             rightFoundation.setPosition(0);
             leftFoundation.setPosition(1);
