@@ -55,6 +55,8 @@ public class AutoFoundationBlue extends LinearOpMode {
             front_right.setPower(-CRATER_SPEED);
             back_right.setPower(-CRATER_SPEED);
 
+        }
+
             runtime.reset();
             while (opModeIsActive() && (runtime.seconds() < 1)) {
                 telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
@@ -65,6 +67,7 @@ public class AutoFoundationBlue extends LinearOpMode {
                 front_right.setPower(CRATER_SPEED);
                 back_right.setPower(CRATER_SPEED);
 
+            }
 
                 //this is where we put the servo moving code
 
@@ -94,5 +97,3 @@ public class AutoFoundationBlue extends LinearOpMode {
 
             }
         }
-    }
-}

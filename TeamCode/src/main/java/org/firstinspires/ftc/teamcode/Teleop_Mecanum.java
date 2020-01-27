@@ -65,8 +65,8 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
                leftFoundation.setPosition(0);
            }
            if (gamepad1.x) {
-               rightFoundation.setPosition(1);
-               leftFoundation.setPosition(0);
+               rightFoundation.setPosition(0.5);
+               leftFoundation.setPosition(1);
            }
            if (gamepad2.a) {
                intakeArm.setPosition(0);
