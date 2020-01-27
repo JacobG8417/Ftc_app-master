@@ -17,11 +17,6 @@ public class AutoDrivetoLine extends LinearOpMode {
 
     static final double CRATER_SPEED = 1;
 
-    private DcMotor back_left = null;
-    private DcMotor front_right = null;
-    private DcMotor back_right = null;
-    private DcMotor front_left = null;
-
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -51,37 +46,6 @@ public class AutoDrivetoLine extends LinearOpMode {
             back_right.setPower(CRATER_SPEED);
 
 
-        /*runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.78)) {
-            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-            front_left.setPower(TURN_SPEED);
-            back_left.setPower(TURN_SPEED);
-            front_right.setPower(-TURN_SPEED);
-            back_right.setPower(-TURN_SPEED);
-
-        }
-
-        front_left.setPower(0);
-        back_left.setPower(0);
-        front_right.setPower(0);
-        back_right.setPower(0);
-
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2.2)) {
-            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-
-            front_left.setPower(CRATER_SPEED);
-            back_left.setPower(CRATER_SPEED);
-            front_right.setPower(CRATER_SPEED);
-            back_right.setPower(CRATER_SPEED);
-
-
-
-            telemetry.addData("Path", "Complete");
-            telemetry.update();*/
-
         }
     }
-}//}
+}

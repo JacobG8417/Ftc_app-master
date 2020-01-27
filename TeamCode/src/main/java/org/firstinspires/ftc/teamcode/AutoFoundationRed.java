@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -11,7 +10,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 
 @Autonomous(name="AutoFoundationBlue", group="Pushbot")
-public class AutoFoundationBlue extends LinearOpMode {
+public class AutoFoundationRed extends LinearOpMode {
 
     HardwarePushbot robot = new HardwarePushbot();
     private ElapsedTime runtime = new ElapsedTime();
@@ -50,10 +49,10 @@ public class AutoFoundationBlue extends LinearOpMode {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
-            front_left.setPower(-DRIVE_SPEED);
-            back_left.setPower(-DRIVE_SPEED);
-            front_right.setPower(-DRIVE_SPEED);
-            back_right.setPower(-DRIVE_SPEED);
+            front_left.setPower(DRIVE_SPEED);
+            back_left.setPower(DRIVE_SPEED);
+            front_right.setPower(DRIVE_SPEED);
+            back_right.setPower(DRIVE_SPEED);
 
         }
 
@@ -106,10 +105,10 @@ public class AutoFoundationBlue extends LinearOpMode {
                     telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
                     telemetry.update();
 
-                    front_left.setPower(DRIVE_SPEED);
-                    back_left.setPower(DRIVE_SPEED);
-                    front_right.setPower(DRIVE_SPEED);
-                    back_right.setPower(DRIVE_SPEED);
+                    front_left.setPower(-DRIVE_SPEED);
+                    back_left.setPower(-DRIVE_SPEED);
+                    front_right.setPower(-DRIVE_SPEED);
+                    back_right.setPower(-DRIVE_SPEED);
                 }
             }
         }
