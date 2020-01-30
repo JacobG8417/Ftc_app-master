@@ -44,7 +44,7 @@ public class AutoFoundationRed extends LinearOpMode {
 
         //This is the block for strafing to line up to the foundation
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.80)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.00)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
@@ -57,7 +57,7 @@ public class AutoFoundationRed extends LinearOpMode {
 
         //this is for driving up to the foundation
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.60)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.65)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
@@ -93,7 +93,7 @@ public class AutoFoundationRed extends LinearOpMode {
 
         //this is for driving back from the foundation to the wall
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.25)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.00)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
