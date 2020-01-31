@@ -44,7 +44,7 @@ public class AutoFoundationRed extends LinearOpMode {
 
         //This is the block for strafing to line up to the foundation
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.95)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.00)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
