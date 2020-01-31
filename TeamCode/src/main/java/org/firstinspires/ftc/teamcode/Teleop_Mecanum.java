@@ -84,7 +84,7 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
            //This part assigns buttons/joysticks for driving
            double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
            double inputX = Math.abs(gamepad1.left_stick_x) > ACCEPTINPUTTHRESHOLD ? -gamepad1.left_stick_x : 0;
-           double inputC = Math.abs(gamepad1.right_stick_y) > ACCEPTINPUTTHRESHOLD ? -gamepad1.right_stick_y : 0;
+           double inputC = Math.abs(gamepad1.right_stick_x) > ACCEPTINPUTTHRESHOLD ? -gamepad1.right_stick_x : 0;
            double BIGGERTRIGGER = gamepad1.left_trigger > gamepad1.right_trigger ? gamepad1.left_trigger : gamepad1.right_trigger;
 
            if (BIGGERTRIGGER > TRIGGERTHRESHOLD) { //If we have enough pressure on a trigger
