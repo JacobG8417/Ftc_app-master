@@ -143,7 +143,7 @@ public class AutoStoneCarryRed extends LinearOpMode {
 
         //this is for strafing up to the foundation
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 4.50)) {
+        while (opModeIsActive() && (runtime.seconds() < 4.60)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
@@ -221,7 +221,7 @@ public class AutoStoneCarryRed extends LinearOpMode {
 
         //this is for parking
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2.30)) {
+        while (opModeIsActive() && (runtime.seconds() < 2.50)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
