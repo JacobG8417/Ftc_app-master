@@ -46,7 +46,7 @@ public class AutoStoneCarryBlue extends LinearOpMode {
 
         //This is the block for strafing to line up to the last block in the quarry
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.30)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.57)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
@@ -121,7 +121,7 @@ public class AutoStoneCarryBlue extends LinearOpMode {
 
         //this is for driving back from the quarry
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.70)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.75)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
@@ -204,7 +204,7 @@ public class AutoStoneCarryBlue extends LinearOpMode {
 
         //this is for driving back to the wall
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.10)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.15)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
