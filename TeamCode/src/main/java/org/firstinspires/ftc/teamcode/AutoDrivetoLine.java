@@ -44,8 +44,11 @@ public class AutoDrivetoLine extends LinearOpMode {
             back_left.setPower(-DRIVE_SPEED);
             front_right.setPower(-DRIVE_SPEED);
             back_right.setPower(DRIVE_SPEED);
-
-
         }
+
+        front_left.setPower(0);
+        back_left.setPower(0);
+        front_right.setPower(0);
+        back_right.setPower(0);
     }
 }
