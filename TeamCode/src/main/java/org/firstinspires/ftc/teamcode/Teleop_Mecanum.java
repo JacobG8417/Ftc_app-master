@@ -161,4 +161,7 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
         front_right.setPower(rightFrontVal * scaledPower + frontRight.getPower() * (1 - scaledPower));
         back_right.setPower(rightBackVal * scaledPower + backRight.getPower() * (1 - scaledPower));
     }
+
+    private static class HangingSlide {
+    }
 }
