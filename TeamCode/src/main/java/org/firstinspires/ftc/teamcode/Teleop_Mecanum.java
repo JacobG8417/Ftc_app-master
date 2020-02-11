@@ -15,6 +15,7 @@ import java.util.Arrays;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Mecanum_TeleOp", group="TeleOp")
 public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
+
     //This gives deadzones for the motors.
     private static final double TRIGGERTHRESHOLD = .2;
     private static final double ACCEPTINPUTTHRESHOLD = .15;
@@ -23,6 +24,9 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
     private static final double SCALEDPOWER = 1;
 
     private static DcMotor front_left, back_left, front_right, back_right;
+    private double slowSpeed = 0.25;
+    private double strafeSpeed = 1;
+    private double driveSpeed = 1;
 
     @Override
     public void runOpMode() {
@@ -80,8 +84,10 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
            if (gamepad2.b) {
                intakeGrabber.setPosition(0.5);
            }
-
            //This part assigns buttons/joysticks for driving
+
+
+
            double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
            double inputX = Math.abs(gamepad1.left_stick_x) > ACCEPTINPUTTHRESHOLD ? -gamepad1.left_stick_x : 0;
            double inputC = Math.abs(gamepad1.right_stick_x) > ACCEPTINPUTTHRESHOLD ? -gamepad1.right_stick_x : 0;
@@ -101,6 +107,8 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
                    inputX /= 3 * BIGGERTRIGGER; //slow down our power inputs
                    inputC /= 3 * BIGGERTRIGGER; //slow down our power inputs
 
+
+
                }
 
            }
@@ -113,6 +121,12 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
     // x - side
     // c - rotation
     public static void arcadeMecanum(double y, double x, double c, DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight) {
+
+
+
+
+
+
         double leftFrontVal = y + x + c;
         double rightFrontVal = y - x - c;
         double leftBackVal = y - x + c;
@@ -160,8 +174,5 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
         back_left.setPower(leftBackVal * scaledPower + backLeft.getPower() * (+scaledPower));
         front_right.setPower(rightFrontVal * scaledPower + frontRight.getPower() * (1 - scaledPower));
         back_right.setPower(rightBackVal * scaledPower + backRight.getPower() * (1 - scaledPower));
-    }
-
-    private static class HangingSlide {
     }
 }
