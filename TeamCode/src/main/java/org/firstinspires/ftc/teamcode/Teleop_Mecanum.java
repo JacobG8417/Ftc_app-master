@@ -30,40 +30,63 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        //this gives motors names using universal constants(another class, look at the Java Class
-        //called UniversalConstants for the code).
+        //this declares the motors
         front_left = hardwareMap.dcMotor.get(UniversalConstants.LEFT1NAME);
+
         back_left = hardwareMap.dcMotor.get(UniversalConstants.LEFT2NAME);
+
         front_right = hardwareMap.dcMotor.get(UniversalConstants.RIGHT1NAME);
+
         back_right = hardwareMap.dcMotor.get(UniversalConstants.RIGHT2NAME);
 
-        //this allows the robot drive
         front_right.setDirection(DcMotorSimple.Direction.FORWARD);
+
         front_left.setDirection(DcMotorSimple.Direction.REVERSE);
+
         back_right.setDirection(DcMotorSimple.Direction.FORWARD);
+
         back_left.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        DcMotor slide_left = hardwareMap.get(DcMotor.class, "slide_left");
-        DcMotor slide_right = hardwareMap.get(DcMotor.class, "slide_right");
+        //DcMotor slide_left = hardwareMap.get(DcMotor.class, "slide_left");
 
-        slide_right.setDirection(DcMotorSimple.Direction.REVERSE);
-        slide_left.setDirection(DcMotorSimple.Direction.FORWARD);
+        //DcMotor slide_right = hardwareMap.get(DcMotor.class, "slide_right");
 
+        //slide_right.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        //slide_left.setDirection(DcMotorSimple.Direction.FORWARD);
+
+
+        //this declares the servos
        Servo rightFoundation = hardwareMap.servo.get("rightFoundation");
+
        Servo leftFoundation = hardwareMap.servo.get("leftFoundation");
+
        Servo intakeArm = hardwareMap.servo.get("intakeArm");
+
        Servo intakeGrabber = hardwareMap.servo.get("intakeGrabber");
+
 
        waitForStart();
 
        while(opModeIsActive()) {
 
-           double leftslide = gamepad2.left_stick_y;
-           double rightslide = gamepad2.left_stick_y;
+           //this assigns buttons to the slides
+           //double leftslide = gamepad2.left_stick_y;
+           //double rightslide = gamepad2.left_stick_y;
+           //slide_left.setPower(leftslide);
+           //slide_right.setPower(rightslide);
 
-           slide_left.setPower(leftslide);
-           slide_right.setPower(rightslide);
+           //this assigns variables for the slide limit
+           double hangingMotorCountsPerInch = 2240; //ticks per one rotation of the motor for a rev 40:1 hd hex motor
+           double hangingPulleyDiameter = 0.1968503937007874015748031496063;       //diameter in inches of the spool/pulley that has string on it
+           double hangingGearRatio = 60/40;          //Gear ratio between motor and final output axle (if no gear ratio, just set equal to 1)
+           double ticksPerHangingRev = hangingMotorCountsPerInch * hangingGearRatio;  //Calculates the ticks per rotaion of the OUTPUT AXLE, not the motor.  If gear ratio is 1:1, this will be the same as hangingMotorCountsPerInch
+           double ticksPerHangingInch =  (ticksPerHangingRev/(hangingPulleyDiameter * 3.14159265)); //Calculates how many ticks of the motor's output axle it takes to make the slide go up 1 inch
 
+           double hangingLimit = 30; //amount of inches extension you want at the very top.  Recommend .25-.5 inches lower than actual full extension, just to be safe.
+
+
+            //this assigns buttons to all of the servos
            if (gamepad1.a) {
                rightFoundation.setPosition(1);
                leftFoundation.setPosition(0);
@@ -84,10 +107,7 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
            if (gamepad2.b) {
                intakeGrabber.setPosition(0.5);
            }
-           //This part assigns buttons/joysticks for driving
-
-
-
+           //This part assigns buttons/joysticks for driving the chassis
            double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
            double inputX = Math.abs(gamepad1.left_stick_x) > ACCEPTINPUTTHRESHOLD ? -gamepad1.left_stick_x : 0;
            double inputC = Math.abs(gamepad1.right_stick_x) > ACCEPTINPUTTHRESHOLD ? -gamepad1.right_stick_x : 0;
@@ -106,32 +126,23 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
                    inputY /= 3 * BIGGERTRIGGER; //slow down our power inputs
                    inputX /= 3 * BIGGERTRIGGER; //slow down our power inputs
                    inputC /= 3 * BIGGERTRIGGER; //slow down our power inputs
-
-
-
                }
-
            }
            //Use the larger trigger value to scale down the inputs.
            arcadeMecanum(inputY, inputX, inputC, front_left, front_right, back_left, back_right);
        }
     }
-
     // y - forwards
     // x - side
     // c - rotation
     public static void arcadeMecanum(double y, double x, double c, DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight) {
 
-
-
-
-
-
+        //this allows the robot to turn, strafe, and drive
         double leftFrontVal = y + x + c;
         double rightFrontVal = y - x - c;
         double leftBackVal = y - x + c;
         double rightBackVal = y + x - c;
-        //Adding Vels for strafing, driving, and turning.
+
         double strafeVel;
         double driveVel;
         double turnVel;
