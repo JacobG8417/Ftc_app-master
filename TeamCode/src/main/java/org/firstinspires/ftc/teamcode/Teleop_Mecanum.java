@@ -47,13 +47,13 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
 
         back_left.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        //DcMotor slide_left = hardwareMap.get(DcMotor.class, "slide_left");
+        DcMotor slide_left = hardwareMap.get(DcMotor.class, "slide_left");
 
-        //DcMotor slide_right = hardwareMap.get(DcMotor.class, "slide_right");
+        DcMotor slide_right = hardwareMap.get(DcMotor.class, "slide_right");
 
-        //slide_right.setDirection(DcMotorSimple.Direction.REVERSE);
+        slide_right.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        //slide_left.setDirection(DcMotorSimple.Direction.FORWARD);
+        slide_left.setDirection(DcMotorSimple.Direction.FORWARD);
 
 
         //this declares the servos
@@ -67,14 +67,14 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
 
 
        waitForStart();
-
+        //init loop
        while(opModeIsActive()) {
 
            //this assigns buttons to the slides
-           //double leftslide = gamepad2.left_stick_y;
-           //double rightslide = gamepad2.left_stick_y;
-           //slide_left.setPower(leftslide);
-           //slide_right.setPower(rightslide);
+           double leftslide = gamepad2.left_stick_y;
+           double rightslide = gamepad2.left_stick_y;
+           slide_left.setPower(leftslide);
+           slide_right.setPower(rightslide);
 
            //this assigns variables for the slide limit
            double hangingMotorCountsPerInch = 2240; //ticks per one rotation of the motor for a rev 40:1 hd hex motor
@@ -85,8 +85,7 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
 
            double hangingLimit = 30; //amount of inches extension you want at the very top.  Recommend .25-.5 inches lower than actual full extension, just to be safe.
 
-
-            //this assigns buttons to all of the servos
+               //this assigns buttons to all of the servos
            if (gamepad1.a) {
                rightFoundation.setPosition(1);
                leftFoundation.setPosition(0);
@@ -150,8 +149,7 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
             driveVel = 0;
             strafeVel = 0;
             turnVel = 0;
-            //this part allows the robot to turn with the mecanums, taking our certain variables so
-            //it can turn.
+            
             double leftFrontVel = -driveVel - strafeVel + turnVel;
             double rightFrontVel = -driveVel + strafeVel - turnVel;
             double leftRearVel = -driveVel + strafeVel + turnVel;
