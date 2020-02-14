@@ -32,40 +32,24 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
     public void runOpMode() {
         //this declares the motors
         front_left = hardwareMap.dcMotor.get(UniversalConstants.LEFT1NAME);
-
         back_left = hardwareMap.dcMotor.get(UniversalConstants.LEFT2NAME);
-
         front_right = hardwareMap.dcMotor.get(UniversalConstants.RIGHT1NAME);
-
         back_right = hardwareMap.dcMotor.get(UniversalConstants.RIGHT2NAME);
-
         front_right.setDirection(DcMotorSimple.Direction.FORWARD);
-
         front_left.setDirection(DcMotorSimple.Direction.REVERSE);
-
         back_right.setDirection(DcMotorSimple.Direction.FORWARD);
-
         back_left.setDirection(DcMotorSimple.Direction.REVERSE);
-
         DcMotor slide_left = hardwareMap.get(DcMotor.class, "slide_left");
-
         DcMotor slide_right = hardwareMap.get(DcMotor.class, "slide_right");
-
         slide_right.setDirection(DcMotorSimple.Direction.REVERSE);
-
         slide_left.setDirection(DcMotorSimple.Direction.FORWARD);
-
 
         //this declares the servos
        Servo rightFoundation = hardwareMap.servo.get("rightFoundation");
-
        Servo leftFoundation = hardwareMap.servo.get("leftFoundation");
-
        Servo intakeArm = hardwareMap.servo.get("intakeArm");
-
        Servo intakeGrabber = hardwareMap.servo.get("intakeGrabber");
-
-
+       
        waitForStart();
         //init loop
        while(opModeIsActive()) {
@@ -106,82 +90,38 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
            if (gamepad2.b) {
                intakeGrabber.setPosition(0.5);
            }
-           //This part assigns buttons/joysticks for driving the chassis
-           double inputY = Math.abs(gamepad1.left_stick_y) > ACCEPTINPUTTHRESHOLD ? gamepad1.left_stick_y : 0;
-           double inputX = Math.abs(gamepad1.left_stick_x) > ACCEPTINPUTTHRESHOLD ? -gamepad1.left_stick_x : 0;
-           double inputC = Math.abs(gamepad1.right_stick_x) > ACCEPTINPUTTHRESHOLD ? -gamepad1.right_stick_x : 0;
-           double BIGGERTRIGGER = gamepad1.left_trigger > gamepad1.right_trigger ? gamepad1.left_trigger : gamepad1.right_trigger;
-
-           if (BIGGERTRIGGER > TRIGGERTHRESHOLD) { //If we have enough pressure on a trigger
-               if ((Math.abs(inputY) > Math.abs(inputX)) && (Math.abs(inputY) > Math.abs(inputC))) { //If our forwards motion is the largest motion vector
-                   inputY /= 5 * BIGGERTRIGGER; //slow down our power inputs
-                   inputX /= 5 * BIGGERTRIGGER; //slow down our power inputs
-                   inputC /= 5 * BIGGERTRIGGER; //slow down our power inputs
-               } else if ((Math.abs(inputC) > Math.abs(inputX)) && (Math.abs(inputC) > Math.abs(inputY))) { //and if our turing motion is the largest motion vector
-                   inputY /= 4 * BIGGERTRIGGER; //slow down our power inputs
-                   inputX /= 4 * BIGGERTRIGGER; //slow down our power inputs
-                   inputC /= 4 * BIGGERTRIGGER; //slow down our power inputs
-               } else if ((Math.abs(inputX) > Math.abs(inputY)) && (Math.abs(inputX) > Math.abs(inputC))) { //and if our strafing motion is the largest motion vector
-                   inputY /= 3 * BIGGERTRIGGER; //slow down our power inputs
-                   inputX /= 3 * BIGGERTRIGGER; //slow down our power inputs
-                   inputC /= 3 * BIGGERTRIGGER; //slow down our power inputs
-               }
-           }
            //Use the larger trigger value to scale down the inputs.
-           arcadeMecanum(inputY, inputX, inputC, front_left, front_right, back_left, back_right);
+           arcadeMecanum(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
        }
     }
     // y - forwards
     // x - side
     // c - rotation
-    public static void arcadeMecanum(double y, double x, double c, DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight) {
+    public void arcadeMecanum(double drive, double strafe, double turn) {
+        //if the left bumper is being pressed, use slowmode
+        if (gamepad1.left_bumper) {
+            strafe *= slowSpeed;
+            drive *= slowSpeed;
+            turn *= slowSpeed;
+        }
 
         //this allows the robot to turn, strafe, and drive
-        double leftFrontVal = y + x + c;
-        double rightFrontVal = y - x - c;
-        double leftBackVal = y - x + c;
-        double rightBackVal = y + x - c;
+        double leftFront = -drive - strafe - turn;
+        double rightFront = -drive + strafe + turn;
+        double leftBack = -drive  + strafe - turn;
+        double rightBack = -drive - strafe  + turn;
 
-        double strafeVel;
-        double driveVel;
-        double turnVel;
-        {
-            driveVel = 0;
-            strafeVel = 0;
-            turnVel = 0;
-            
-            double leftFrontVel = -driveVel - strafeVel + turnVel;
-            double rightFrontVel = -driveVel + strafeVel - turnVel;
-            double leftRearVel = -driveVel + strafeVel + turnVel;
-            double rightRearVel = -driveVel - strafeVel - turnVel;
-            double[] vels = {leftFrontVel, rightFrontVel, leftRearVel, rightRearVel};
-
-            Arrays.sort(vels);
-            if (vels[3] > 1) {
-                leftFrontVel /= vels[3];
-                rightFrontVel /= vels[3];
-                leftRearVel /= vels[3];
-                rightRearVel /= vels[3];
-            }
-            frontLeft.setPower(leftFrontVel);
-            frontRight.setPower(rightFrontVel);
-            backLeft.setPower(leftRearVel);
-            backRight.setPower(rightRearVel);
+        double[] pows = {leftFront, rightFront, leftBack, rightBack};
+        Arrays.sort(pows);
+        if (pows[3] > 1) {
+            leftFront /= pows[3];
+            rightFront /= pows[3];
+            leftBack /= pows[3];
+            rightBack /= pows[3];
         }
-
-        double[] wheelPowers = {rightFrontVal, leftFrontVal, leftBackVal, rightBackVal};
-        Arrays.sort(wheelPowers);
-        if (wheelPowers[3] > 1) {
-            leftFrontVal /= wheelPowers[3];
-            rightFrontVal /= wheelPowers[3];
-            leftBackVal /= wheelPowers[3];
-            rightBackVal /= wheelPowers[3];
-        }
-        double scaledPower = SCALEDPOWER;
-        //This puts power to the wheels in the correct way to make it turn.
-        front_left.setPower(leftFrontVal * scaledPower + frontLeft.getPower() * (+scaledPower));
-        back_left.setPower(leftBackVal * scaledPower + backLeft.getPower() * (+scaledPower));
-        front_right.setPower(rightFrontVal * scaledPower + frontRight.getPower() * (1 - scaledPower));
-        back_right.setPower(rightBackVal * scaledPower + backRight.getPower() * (1 - scaledPower));
+        front_left.setPower(leftFront);
+        front_right.setPower(rightFront);
+        back_left.setPower(leftBack);
+        back_right.setPower(rightBack);
     }
 }
