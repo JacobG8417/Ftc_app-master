@@ -19,8 +19,8 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
     private static DcMotor front_left, back_left, front_right, back_right;
     private double slowSpeed = 0.25;
 
-        //this is the init loop
         @Override
+        //this is the init loop
         public void runOpMode () {
             //this declares the motors
             //chassis motors
@@ -44,9 +44,9 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
             Servo intakeArm = hardwareMap.servo.get("intakeArm");
             Servo intakeGrabber = hardwareMap.servo.get("intakeGrabber");
 
-            //this actually stops the slides when they reach the limit
+            /*//this actually stops the slides when they reach the limit
             slide_right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            slide_left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            slide_left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);*/
 
             //this is after you hit start
             waitForStart();
@@ -57,48 +57,52 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
                 double rightslide = gamepad2.left_stick_y;
                 slide_left.setPower(leftslide);
                 slide_right.setPower(rightslide);
-
-                //this assigns variables for the slide limit and finds the position of it
-                double slideMotorCountsPerInch = 2240; //ticks per one rotation of the motor for a rev 40:1 hd hex motor
-                double slidePulleyDiameter = 0.1968503937007874015748031496063;       //diameter in inches of the spool/pulley that has string on it
-                double finalGearRatio = 1;          //Gear ratio between motor and final output axle (if no gear ratio, just set equal to 1)
-                double ticksPerHangingRev = slideMotorCountsPerInch * finalGearRatio;  //Calculates the ticks per rotaion of the OUTPUT AXLE, not the motor.  If gear ratio is 1:1, this will be the same as hangingMotorCountsPerInch
-                double ticksPerHangingInch = (ticksPerHangingRev / (slidePulleyDiameter * 3.14159265)); //Calculates how many ticks of the motor's output axle it takes to make the slide go up 1 inch
-                double hangingLimit = 30;
-                if(slide_right.getPosition <= hangingLimit*ticksPerHangingInch && slide_right.getPosition >= 0)
-
+/*
+            //this assigns variables for the slide limit and finds the position of it
+            double slideCountsPerInch = 2240; //ticks per one rotation of the motor for a rev 40:1 hd hex motor
+            double slidePulleyDiameter = 0.1968503937007874015748031496063;       //diameter in inches of the spool/pulley that has string on it
+            double finalGearRatio = 1;          //Gear ratio between motor and final output axle (if no gear ratio, just set equal to 1)
+            double ticksPerHangingRev = slideCountsPerInch * finalGearRatio;  //Calculates the ticks per rotaion of the OUTPUT AXLE, not the motor.  If gear ratio is 1:1, this will be the same as hangingMotorCountsPerInch
+            double ticksPerHangingInch = (ticksPerHangingRev / (slidePulleyDiameter * 3.14159265)); //Calculates how many ticks of the motor's output axle it takes to make the slide go up 1 inch
+            double hangingLimit = 6;
+            if(slide_right.getCurrentPosition() <= hangingLimit*ticksPerHangingInch && slide_right.getCurrentPosition() >= 0)
+            if(slide_left.getCurrentPosition() <= hangingLimit*ticksPerHangingInch && slide_left.getCurrentPosition() >= 0)
+*/
                 //this assigns buttons to all of the servos
-            rightFoundation.setPosition(1);
-            if (gamepad1.a) {
-            leftFoundation.setPosition(0);
+                {
+                    rightFoundation.setPosition(1);
+                    if (gamepad1.a) {
+                        leftFoundation.setPosition(0);
+                        rightFoundation.setPosition(0);
+                    }
+                    if (gamepad1.x) {
+                        rightFoundation.setPosition(0.5);
+                        leftFoundation.setPosition(1);
+                    }
+                    if (gamepad2.a) {
+                        intakeArm.setPosition(0);
+                    }
+                    if (gamepad2.x) {
+                        intakeGrabber.setPosition(0);
+                    }
+                }
+                if (gamepad2.y) {
+                    intakeArm.setPosition(1);
+                }
+                if (gamepad2.b) {
+                    intakeGrabber.setPosition(0.5);
+                }
             }
-            if (gamepad1.x) {
-                rightFoundation.setPosition(0.5);
-                leftFoundation.setPosition(1);
-            }
-            if (gamepad2.a) {
-                intakeArm.setPosition(0);
-            }
-            if (gamepad2.x) {
-                intakeGrabber.setPosition(0);
-            }
-            }
-            if (gamepad2.y) {
-                intakeArm.setPosition(1);
-            }
-            if (gamepad2.b) {
-                intakeGrabber.setPosition(0.5);
-            }
-            //Use the larger trigger value to scale down the inputs.
+            //assigns sticks for driving
             arcadeMecanum(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
         }
-        //adds the slow motion for the driving
-        public void arcadeMecanum ( double drive, double strafe, double turn){
-            if (gamepad1.left_bumper) {
-                strafe *= slowSpeed;
-                drive *= slowSpeed;
-                turn *= slowSpeed;
-            }
+    public void arcadeMecanum(double drive, double strafe, double turn) {
+        //if the left bumper is being pressed, use slowmode
+        if (gamepad1.left_bumper) {
+            strafe *= slowSpeed;
+            drive *= slowSpeed;
+            turn *= slowSpeed;
+                }
 
             //this allows the robot to turn, strafe, and drive
             double leftFront = -drive - strafe - turn;
