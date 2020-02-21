@@ -17,16 +17,23 @@ import java.util.Arrays;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Mecanum_TeleOp", group="TeleOp")
 public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
+    //this assigns variables for the slide limit and finds the position of it
+    double slideCountsPerInch = 2240; //ticks per one rotation of the motor for a rev 40:1 hd hex motor
+    double slidePulleyDiameter = 0.197;       //diameter in inches of the spool/pulley that has string on it
+    double hangingLimit = 8; //distance in inches the slide can go up at max
 
     private static DcMotor front_left, back_left, front_right, back_right;
+    //this give variables for slow modes
     private double slowSpeed = 0.25;
     private double superSlowSpeed = 0.05;
+
     private com.qualcomm.robotcore.util.Range Range;
 
     @Override
     //this is the init loop
     public void runOpMode() {
         //this declares the motors
+
         //chassis motors
         front_left = hardwareMap.dcMotor.get(UniversalConstants.LEFT1NAME);
         back_left = hardwareMap.dcMotor.get(UniversalConstants.LEFT2NAME);
@@ -41,8 +48,10 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
         DcMotor slide_right = hardwareMap.get(DcMotor.class, "slide_right");
         //this actually stops the slides when they reach the limit
         slide_right.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
+        slide_left.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
         slide_right.setDirection(DcMotorSimple.Direction.REVERSE);
-        slide_left.setDirection(DcMotorSimple.Direction.FORWARD);
+        slide_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slide_right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         //this declares the servos
         Servo rightFoundation = hardwareMap.servo.get("rightFoundation");
@@ -53,31 +62,14 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
         //this is after you hit start
         waitForStart();
         while (opModeIsActive()) {
-
-            double rightslide = gamepad2.left_stick_y;
-            double leftslide = gamepad2.left_stick_y;
-
-            slide_right.setPower(rightslide);
-            slide_left.setPower(leftslide);
-
-            /*//this assigns variables for the slide limit and finds the position of it
-            double slideCountsPerInch = 2240; //ticks per one rotation of the motor for a rev 40:1 hd hex motor
-            double slidePulleyDiameter = 0.1968503937007874015748031496063;       //diameter in inches of the spool/pulley that has string on it
-            double finalGearRatio = 1;          //Gear ratio between motor and final output axle (if no gear ratio, just set equal to 1)
-            double ticksPerHangingRev = slideCountsPerInch * finalGearRatio;  //Calculates the ticks per rotaion of the OUTPUT AXLE, not the motor.  If gear ratio is 1:1, this will be the same as hangingMotorCountsPerInch
-            double ticksPerHangingInch = (ticksPerHangingRev / (slidePulleyDiameter * 3.14159265)); //Calculates how many ticks of the motor's output axle it takes to make the slide go up 1 inch
-            double hangingLimit = 6;*/
-
-           /* //this assigns joysticks to it and makes it so that the motor power will be zero even if we press the joysticks when the slide is at hangingLimit
-            if (slide_right.getCurrentPosition() <= hangingLimit * ticksPerHangingInch && slide_right.getCurrentPosition() >= 0) {
-
-                rightslide = Range.clip(gamepad2.left_stick_y, -1, 0);
-                slide_right.setPower(rightslide);
+            double slidePow = -gamepad2.left_stick_y;
+            if (slide_right.getCurrentPosition() >= hangingLimit * slideCountsPerInch) {
+                slidePow = Math.min(slidePow, 0);
+            } else if (slide_right.getCurrentPosition() <= 0) {
+                slidePow = Math.max(slidePow, 0);
             }
-            if (slide_left.getCurrentPosition() <= hangingLimit * ticksPerHangingInch && slide_left.getCurrentPosition() >= 0) {
-                leftslide = Range.clip(gamepad2.left_stick_y, -1, 0);
-                slide_left.setPower(leftslide);
-            }*/
+            slide_left.setPower(slidePow);
+            slide_right.setPower(slidePow);
 
             //this assigns buttons to all of the servos
             {
@@ -142,5 +134,3 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
             back_right.setPower(rightBack);
         }
     }
-
-
