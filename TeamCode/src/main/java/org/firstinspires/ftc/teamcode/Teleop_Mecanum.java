@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServoImpl;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -44,9 +45,9 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
         Servo intakeArm = hardwareMap.servo.get("intakeArm");
         Servo intakeGrabber = hardwareMap.servo.get("intakeGrabber");
 
-            /*//this actually stops the slides when they reach the limit
-            slide_right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            slide_left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);*/
+            //this actually stops the slides when they reach the limit
+            slide_right.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
+            slide_left.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
 
         //this is after you hit start
         waitForStart();
@@ -70,8 +71,7 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
 
                 //this assigns buttons to all of the servos
                 {
-
-                    rightFoundation.setPosition(1);
+                    
                     if (gamepad1.a) {
                         leftFoundation.setPosition(0);
                         rightFoundation.setPosition(1);
