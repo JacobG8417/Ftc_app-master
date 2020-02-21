@@ -56,6 +56,9 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
             double rightslide = gamepad2.left_stick_y;
             double leftslide = gamepad2.left_stick_y;
 
+            slide_right.setPower(rightslide);
+            slide_left.setPower(leftslide);
+
             /*//this assigns variables for the slide limit and finds the position of it
             double slideCountsPerInch = 2240; //ticks per one rotation of the motor for a rev 40:1 hd hex motor
             double slidePulleyDiameter = 0.1968503937007874015748031496063;       //diameter in inches of the spool/pulley that has string on it
