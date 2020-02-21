@@ -86,7 +86,7 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
                     rightFoundation.setPosition(1);
                 }
                 if (gamepad1.x) {
-                    rightFoundation.setPosition(0.5);
+                    rightFoundation.setPosition(0);
                     leftFoundation.setPosition(1);
                 }
                 if (gamepad2.a) {
@@ -108,15 +108,13 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
         }
     }
 
-
         public void arcadeMecanum ( double drive, double strafe, double turn){
-            //if the left bumper is being pressed, use slowmode
+            //if the left bumper is being pressed, robot drives slowly
             if (gamepad1.left_bumper) {
                 strafe *= slowSpeed;
                 drive *= slowSpeed;
                 turn *= slowSpeed;
             }
-
 
             //this allows the robot to turn, strafe, and drive
             double leftFront = -drive - strafe - turn;
