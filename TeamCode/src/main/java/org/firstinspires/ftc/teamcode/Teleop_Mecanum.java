@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 import java.util.Arrays;
 
@@ -19,6 +20,7 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
 
     private static DcMotor front_left, back_left, front_right, back_right;
     private double slowSpeed = 0.25;
+    private com.qualcomm.robotcore.util.Range Range;
 
     @Override
     //this is the init loop
@@ -36,6 +38,8 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
         //slide motors
         DcMotor slide_left = hardwareMap.get(DcMotor.class, "slide_left");
         DcMotor slide_right = hardwareMap.get(DcMotor.class, "slide_right");
+        //this actually stops the slides when they reach the limit
+        slide_right.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
         slide_right.setDirection(DcMotorSimple.Direction.REVERSE);
         slide_left.setDirection(DcMotorSimple.Direction.FORWARD);
 
@@ -45,19 +49,9 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
         Servo intakeArm = hardwareMap.servo.get("intakeArm");
         Servo intakeGrabber = hardwareMap.servo.get("intakeGrabber");
 
-            //this actually stops the slides when they reach the limit
-            slide_right.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
-            slide_left.setZeroPowerBehavior(ZeroPowerBehavior.BRAKE);
-
         //this is after you hit start
         waitForStart();
         while (opModeIsActive()) {
-
-            //this assigns joysticks for the slides
-            double leftslide = gamepad2.left_stick_y;
-            double rightslide = gamepad2.left_stick_y;
-            slide_left.setPower(leftslide);
-            slide_right.setPower(rightslide);
 
             //this assigns variables for the slide limit and finds the position of it
             double slideCountsPerInch = 2240; //ticks per one rotation of the motor for a rev 40:1 hd hex motor
@@ -66,38 +60,49 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
             double ticksPerHangingRev = slideCountsPerInch * finalGearRatio;  //Calculates the ticks per rotaion of the OUTPUT AXLE, not the motor.  If gear ratio is 1:1, this will be the same as hangingMotorCountsPerInch
             double ticksPerHangingInch = (ticksPerHangingRev / (slidePulleyDiameter * 3.14159265)); //Calculates how many ticks of the motor's output axle it takes to make the slide go up 1 inch
             double hangingLimit = 6;
-            if (slide_right.getCurrentPosition() <= hangingLimit * ticksPerHangingInch && slide_right.getCurrentPosition() >= 0)
-                if (slide_left.getCurrentPosition() <= hangingLimit * ticksPerHangingInch && slide_left.getCurrentPosition() >= 0)
 
-                //this assigns buttons to all of the servos
-                {
-                    
-                    if (gamepad1.a) {
-                        leftFoundation.setPosition(0);
-                        rightFoundation.setPosition(1);
-                    }
-                    if (gamepad1.x) {
-                        rightFoundation.setPosition(0.5);
-                        leftFoundation.setPosition(1);
-                    }
-                    if (gamepad2.a) {
-                        intakeArm.setPosition(0);
-                    }
-                    if (gamepad2.x) {
-                        intakeGrabber.setPosition(0);
-                    }
-                    if (gamepad2.y) {
-                        intakeArm.setPosition(1);
-                    }
-                    if (gamepad2.b) {
-                        intakeGrabber.setPosition(0.5);
-                    }
-                }
+            //this assigns joysticks to it and adds something so the motor power will be zero even if we press the joysticks when the slide is at hangingLimit
+            if (slide_right.getCurrentPosition() <= hangingLimit * ticksPerHangingInch && slide_right.getCurrentPosition() >= 0) {
+                double rightslide = gamepad2.left_stick_y;
+                rightslide = Range.clip(gamepad2.left_stick_y, -1, 0);
+                slide_right.setPower(rightslide);
+            }
+            if (slide_left.getCurrentPosition() <= hangingLimit * ticksPerHangingInch && slide_left.getCurrentPosition() >= 0) {
+                double leftslide = gamepad2.left_stick_y;
+                leftslide = Range.clip(gamepad2.left_stick_y, -1, 0);
+                slide_left.setPower(leftslide);
+            }
+            }
+                        //this assigns buttons to all of the servos
+                        {
 
-            //assigns sticks for driving
-            arcadeMecanum(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-        }
-    }
+                            if (gamepad1.a) {
+                                leftFoundation.setPosition(0);
+                                rightFoundation.setPosition(1);
+                            }
+                            if (gamepad1.x) {
+                                rightFoundation.setPosition(0.5);
+                                leftFoundation.setPosition(1);
+                            }
+                            if (gamepad2.a) {
+                                intakeArm.setPosition(0);
+                            }
+                            if (gamepad2.x) {
+                                intakeGrabber.setPosition(0);
+                            }
+                            if (gamepad2.y) {
+                                intakeArm.setPosition(1);
+                            }
+                            if (gamepad2.b) {
+                                intakeGrabber.setPosition(0.5);
+                            }
+                        }
+
+                        //assigns sticks for driving
+                        arcadeMecanum(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+                    }
+
+
         public void arcadeMecanum ( double drive, double strafe, double turn){
             //if the left bumper is being pressed, use slowmode
             if (gamepad1.left_bumper) {
@@ -105,6 +110,7 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
                 drive *= slowSpeed;
                 turn *= slowSpeed;
             }
+
 
             //this allows the robot to turn, strafe, and drive
             double leftFront = -drive - strafe - turn;
@@ -126,3 +132,4 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
             back_right.setPower(rightBack);
         }
     }
+
