@@ -20,6 +20,7 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
 
     private static DcMotor front_left, back_left, front_right, back_right;
     private double slowSpeed = 0.25;
+    private double superSlowSpeed = 0.05;
     private com.qualcomm.robotcore.util.Range Range;
 
     @Override
@@ -114,6 +115,11 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
                 strafe *= slowSpeed;
                 drive *= slowSpeed;
                 turn *= slowSpeed;
+            }
+            if (gamepad1.right_bumper) {
+                strafe *= superSlowSpeed;
+                drive *= superSlowSpeed;
+                turn *= superSlowSpeed;
             }
 
             //this allows the robot to turn, strafe, and drive
