@@ -5,8 +5,6 @@ https://ftcprogramming.wordpress.com/2015/11/30/building-ftc_app-wirelessly/
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.CRServoImpl;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -19,7 +17,6 @@ import java.util.Arrays;
 public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
     //this assigns variables for the slide limit and finds the position of it
     double slideCountsPerInch = 2240; //ticks per one rotation of the motor for a rev 40:1 hd hex motor
-    double slidePulleyDiameter = 0.197;       //diameter in inches of the spool/pulley that has string on it
     double hangingLimit = 8; //distance in inches the slide can go up at max
 
     private static DcMotor front_left, back_left, front_right, back_right;
