@@ -183,7 +183,7 @@ public class AutoStoneCarryBlue extends LinearOpMode {
         telemetry.update();
         sleep(200);
 
-        //this segment is for picking up the block
+        //this segment is for letting go of the block
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 1.15)) {
 

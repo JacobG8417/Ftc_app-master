@@ -25,7 +25,7 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
     private static DcMotor front_left, back_left, front_right, back_right;
     //this give variables for slow modes
     private double slowSpeed = 0.25;
-    private double superSlowSpeed = 0.05;
+    private double superSlowSpeed = 0.10;
 
     private com.qualcomm.robotcore.util.Range Range;
 
@@ -83,7 +83,7 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
                     leftFoundation.setPosition(1);
                 }
                 if (gamepad2.a) {
-                    intakeArm.setPosition(0.5);
+                    intakeArm.setPosition(0);
                 }
                 if (gamepad2.x) {
                     intakeGrabber.setPosition(0);
