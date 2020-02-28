@@ -15,9 +15,10 @@ import java.util.Arrays;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Mecanum_TeleOp", group="TeleOp")
 public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
+
     //this assigns variables for the slide limit and finds the position of it
     double slideCountsPerInch = 2240; //ticks per one rotation of the motor for a rev 40:1 hd hex motor
-    double hangingLimit = 8; //distance in inches the slide can go up at max
+    double hangingLimit = 9.0; //distance in inches the slide can go up at max
 
     private static DcMotor front_left, back_left, front_right, back_right;
     //this give variables for slow modes
