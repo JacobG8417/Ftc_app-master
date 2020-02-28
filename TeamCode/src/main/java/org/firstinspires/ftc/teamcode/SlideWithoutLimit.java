@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="SlideNoLimit", group="TeleOp")
 public class SlideWithoutLimit<opModeIsActive> extends LinearOpMode {
     @Override
@@ -20,8 +17,6 @@ public class SlideWithoutLimit<opModeIsActive> extends LinearOpMode {
             double slidePow = -gamepad2.left_stick_y;
             slide_left.setPower(slidePow);
             slide_right.setPower(slidePow);
-
-
         }
     }
 }
