@@ -264,7 +264,7 @@ public class AutoFoundationandStoneRed extends LinearOpMode {
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 1.15)) {
 
-            intakeArm.setPosition(1);
+            intakeArm.setPosition(0.5);
         }
 
         telemetry.addData("Path", "Complete");

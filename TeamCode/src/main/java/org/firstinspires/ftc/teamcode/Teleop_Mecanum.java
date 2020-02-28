@@ -86,7 +86,7 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
                     intakeGrabber.setPosition(0);
                 }
                 if (gamepad2.y) {
-                    intakeArm.setPosition(1);
+                    intakeArm.setPosition(0.5);
                 }
                 if (gamepad2.b) {
                     intakeGrabber.setPosition(0.5);
