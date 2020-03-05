@@ -143,7 +143,7 @@ public class AutoRed extends LinearOpMode {
 
         //this is for strafing up to the foundation
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 4.95)) {
+        while (opModeIsActive() && (runtime.seconds() < 4.53)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
@@ -177,7 +177,7 @@ public class AutoRed extends LinearOpMode {
 
         //this is for driving up to the foundation
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.02)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.04)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
