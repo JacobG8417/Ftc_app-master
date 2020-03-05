@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 
-@Autonomous(name="FoundationandStoneBlue", group="Pushbot")
-public class AutoFoundationandStoneBlue extends LinearOpMode {
+@Autonomous(name="AutoBlue", group="Pushbot")
+public class AutoBlue extends LinearOpMode {
 
     HardwarePushbot robot = new HardwarePushbot();
     private ElapsedTime runtime = new ElapsedTime();

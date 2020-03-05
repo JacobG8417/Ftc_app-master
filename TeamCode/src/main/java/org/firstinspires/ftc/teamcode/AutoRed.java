@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 
-@Autonomous(name="BlueStoneCarry", group="Pushbot")
-public class AutoStoneCarryBlue extends LinearOpMode {
+@Autonomous(name="AutoRed", group="Pushbot")
+public class AutoRed extends LinearOpMode {
 
     HardwarePushbot robot = new HardwarePushbot();
     private ElapsedTime runtime = new ElapsedTime();
@@ -46,14 +46,14 @@ public class AutoStoneCarryBlue extends LinearOpMode {
 
         //This is the block for strafing to line up to the last block in the quarry
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.57)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.24)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
-            front_left.setPower(DRIVE_SPEED);
-            back_left.setPower(DRIVE_SPEED);
-            front_right.setPower(DRIVE_SPEED);
-            back_right.setPower(DRIVE_SPEED);
+            front_left.setPower(-DRIVE_SPEED);
+            back_left.setPower(-DRIVE_SPEED);
+            front_right.setPower(-DRIVE_SPEED);
+            back_right.setPower(-DRIVE_SPEED);
 
         }
 
@@ -69,7 +69,7 @@ public class AutoStoneCarryBlue extends LinearOpMode {
 
         //this is for driving up to the quarry
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.53)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.58)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
@@ -93,7 +93,7 @@ public class AutoStoneCarryBlue extends LinearOpMode {
 
         //this segment makes the intake grab the block
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.15)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.00)) {
 
             intakeArm.setPosition(0);
         }
@@ -102,7 +102,7 @@ public class AutoStoneCarryBlue extends LinearOpMode {
         sleep(200);
 
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.15)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.60)) {
 
             intakeGrabber.setPosition(0);
         }
@@ -111,9 +111,9 @@ public class AutoStoneCarryBlue extends LinearOpMode {
         sleep(200);
 
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.15)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.60)) {
 
-            intakeArm.setPosition(1);
+            intakeArm.setPosition(0.5);
         }
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -121,7 +121,7 @@ public class AutoStoneCarryBlue extends LinearOpMode {
 
         //this is for driving back from the quarry
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.75)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.70)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
@@ -143,14 +143,14 @@ public class AutoStoneCarryBlue extends LinearOpMode {
 
         //this is for strafing up to the foundation
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 4.545)) {
+        while (opModeIsActive() && (runtime.seconds() < 4.95)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
-            front_left.setPower(-DRIVE_SPEED);
-            back_left.setPower(-DRIVE_SPEED);
-            front_right.setPower(-DRIVE_SPEED);
-            back_right.setPower(-DRIVE_SPEED);
+            front_left.setPower(DRIVE_SPEED);
+            back_left.setPower(DRIVE_SPEED);
+            front_right.setPower(DRIVE_SPEED);
+            back_right.setPower(DRIVE_SPEED);
 
             front_left.setPower(0);
             back_left.setPower(0);
@@ -158,13 +158,26 @@ public class AutoStoneCarryBlue extends LinearOpMode {
             back_right.setPower(0);
         }
 
-            telemetry.addData("Path", "Complete");
+        //this is for fixing the orientation of the robot
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 0.40)) {
+            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
-            sleep(200);
+
+            front_left.setPower(-DRIVE_SPEED);
+            back_left.setPower(DRIVE_SPEED);
+            front_right.setPower(DRIVE_SPEED);
+            back_right.setPower(-DRIVE_SPEED);
+            telemetry.update();
+        }
+
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
+        sleep(200);
 
         //this is for driving up to the foundation
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.15)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.02)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
@@ -183,28 +196,40 @@ public class AutoStoneCarryBlue extends LinearOpMode {
         telemetry.update();
         sleep(200);
 
+        //this makes the foundation movers grab the foundation
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 1.00)) {
+
+            rightFoundation.setPosition(1);
+            leftFoundation.setPosition(0);
+        }
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
+        sleep(200);
+
         //this segment is for letting go of the block
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.15)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.00)) {
 
             intakeArm.setPosition(0);
         }
 
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.15)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.60)) {
 
             intakeGrabber.setPosition(0.5);
         }
 
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.15)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.60)) {
 
             intakeArm.setPosition(0.5);
         }
 
+
         //this is for driving back to the wall
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.20)) {
+        while (opModeIsActive() && (runtime.seconds() < 2.50)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
@@ -218,23 +243,42 @@ public class AutoStoneCarryBlue extends LinearOpMode {
             front_right.setPower(0);
             back_right.setPower(0);
         }
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
+        sleep(200);
+
+
+        //this makes the foundation movers let go of the foundation
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 1.00)) {
+
+            rightFoundation.setPosition(0);
+            leftFoundation.setPosition(1);
+        }
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
+        sleep(200);
 
         //this is for parking
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2.30)) {
+        while (opModeIsActive() && (runtime.seconds() < 2.75)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
-            front_left.setPower(DRIVE_SPEED);
-            back_left.setPower(DRIVE_SPEED);
-            front_right.setPower(DRIVE_SPEED);
-            back_right.setPower(DRIVE_SPEED);
+            front_left.setPower(-DRIVE_SPEED);
+            back_left.setPower(-DRIVE_SPEED);
+            front_right.setPower(-DRIVE_SPEED);
+            back_right.setPower(-DRIVE_SPEED);
 
             front_left.setPower(0);
             back_left.setPower(0);
             front_right.setPower(0);
             back_right.setPower(0);
         }
+
+
+
+
     }
 }
 
