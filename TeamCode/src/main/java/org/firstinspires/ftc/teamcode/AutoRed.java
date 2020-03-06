@@ -17,7 +17,6 @@ public class AutoRed extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     static final double DRIVE_SPEED = 0.5;
-    static final double slidePow = 1;
 
     private DcMotor back_left = null;
     private DcMotor front_right = null;
@@ -33,15 +32,11 @@ public class AutoRed extends LinearOpMode {
         back_left = hardwareMap.dcMotor.get(UniversalConstants.LEFT2NAME);
         front_right = hardwareMap.dcMotor.get(UniversalConstants.RIGHT1NAME);
         back_right = hardwareMap.dcMotor.get(UniversalConstants.RIGHT2NAME);
-        DcMotor slide_right = hardwareMap.dcMotor.get(UniversalConstants.RIGHT3NAME);
-        DcMotor slide_left = hardwareMap.dcMotor.get(UniversalConstants.LEFT3NAME);
 
         front_left.setDirection(DcMotor.Direction.FORWARD);
         back_left.setDirection(DcMotor.Direction.REVERSE);
         front_right.setDirection(DcMotor.Direction.FORWARD);
         back_right.setDirection(DcMotor.Direction.REVERSE);
-        slide_right.setDirection(DcMotorSimple.Direction.REVERSE);
-        slide_left.setDirection(DcMotorSimple.Direction.FORWARD);
 
         Servo rightFoundation = hardwareMap.servo.get("rightFoundation");
         Servo leftFoundation = hardwareMap.servo.get("leftFoundation");
@@ -67,7 +62,7 @@ public class AutoRed extends LinearOpMode {
 
         //This is the block for strafing to line up to the last block in the quarry
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.255)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.25)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
 
@@ -339,7 +334,7 @@ public class AutoRed extends LinearOpMode {
             }
 
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < 0.50)) {
+            while (opModeIsActive() && (runtime.seconds() < 0.70)) {
                 telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
                 telemetry.update();
 
