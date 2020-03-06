@@ -1,7 +1,3 @@
-/*
-ADB guide can be found at:
-https://ftcprogramming.wordpress.com/2015/11/30/building-ftc_app-wirelessly/
-*/
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -23,8 +19,6 @@ public class Teleop_Mecanum<opModeIsActive> extends LinearOpMode {
     private static DcMotor front_left, back_left, front_right, back_right;
     //this give variables for slow modes
     private double slowSpeed = 0.25;
-    private double superSlowSpeed = 0.10;
-
     private com.qualcomm.robotcore.util.Range Range;
 
     @Override
